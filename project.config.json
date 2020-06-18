@@ -8,7 +8,7 @@
 		"minified": true,
 		"newFeature": true,
 		"enhance": true,
-		"checkSiteMap":false
+		"checkSiteMap": false
 	},
 	"appid": "wxcdc3f6966211f2d8",
 	"projectname": "miniprogram-music",
