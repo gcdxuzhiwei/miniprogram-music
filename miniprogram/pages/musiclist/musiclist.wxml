@@ -7,3 +7,5 @@
 		<view class='detail-nm'>{{listInfo.name}}</view>
 	</view>
 </view>
+
+<x-musiclist musiclist="{{musiclist}}" />
