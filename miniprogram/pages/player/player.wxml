@@ -1,2 +1,22 @@
-<!--pages/player/player.wxml-->
-<text>pages/player/player.wxml</text>
+<view class="player-container" style="background:url({{picUrl}}) center/cover no-repeat"></view>
+<view class="player-mask"></view>
+<view class="player-info">
+	<view class="player-disc {{isPlaying ? 'play':''}}" bindtap="onChangeLyricShow" hidden="{{isLyricShow}}">
+		<image class="player-img rotation {{isPlaying ? '':'rotation-paused'}}" src="{{picUrl}}"></image>
+	</view>
+
+	<!-- 歌词 -->
+	<l-lyric class="lyric" isLyricShow="{{!isLyricShow}}" bindtap="onChangeLyricShow" lyric="{{lyric}}" />
+
+	<!-- 进度条 -->
+	<view class="progress-bar">
+		<l-progress-bar bind:musicEnd="onNext" bind:timeUpdate="timeUpdate" bind:musicPlay="onPlay" bind:musicPause="onPause" isSame="{{isSame}}" />
+	</view>
+
+	<!-- 控制面板 -->
+	<view class="control">
+		<text class="iconfont icon-shangyishou" bindtap="onPrev"></text>
+		<text class="iconfont {{isPlaying ? 'icon-zanting':'icon-bofang'}}" bindtap="togglePlaying"></text>
+		<text class="iconfont icon-xiayishou" bindtap="onNext"></text>
+	</view>
+</view>

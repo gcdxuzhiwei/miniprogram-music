@@ -1,21 +1,32 @@
 // pages/player/player.js
+let musiclist=[]
+let nowPlayingIndex=0
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    picUrl:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
-    
+    nowPlayingIndex=options.index
+    musiclist=wx.getStorageSync('musiclist')
+    this._loadMusicDetail()
   },
-
+  _loadMusicDetail(){
+    let music=musiclist[nowPlayingIndex]
+    wx.setNavigationBarTitle({
+      title: music.name,
+    })
+    this.setData({
+      picUrl:music.al.picUrl
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
