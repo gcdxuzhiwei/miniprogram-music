@@ -78,14 +78,15 @@
   color: whitesmoke;
 }
 
-.icon-shangyishou,
-.icon-xiayishou {
-  font-size: 150rpx;
+.icon-shangyishoushangyige,
+.icon-xiayigexiayishou {
+  font-size: 80rpx;
 }
 
-.icon-bofang,
-.icon-zanting {
-  font-size: 200rpx;
+.icon-bofang1,
+.icon-zanting_huaban {
+  font-size: 120rpx;
+  margin: 0 50rpx;
 }
 
 .rotation {
