@@ -21,6 +21,7 @@ Page({
     this._loadMusicDetail(options.musicId)
   },
   _loadMusicDetail(musicId){
+    backgroundAudioManager.stop()
     let music=musiclist[nowPlayingIndex]
     wx.setNavigationBarTitle({
       title: music.name,
@@ -60,6 +61,20 @@ Page({
     this.setData({
       isPlaying:!this.data.isPlaying
     })
+  },
+  onPrev(){
+    nowPlayingIndex--
+    if(nowPlayingIndex<0){
+      nowPlayingIndex=musiclist.length-1
+    }
+    this._loadMusicDetail(musiclist[nowPlayingIndex].id)
+  },
+  onNext(){
+    nowPlayingIndex++
+    if(nowPlayingIndex===musiclist.length){
+      nowPlayingIndex=0
+    }
+    this._loadMusicDetail(musiclist[nowPlayingIndex].id)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
