@@ -70,6 +70,7 @@ Page({
       backgroundAudioManager.singer=music.ar[0].name
       backgroundAudioManager.epname=music.al.name
       }
+      backgroundAudioManager.play()
       this.setData({
         isPlaying:true
       })
