@@ -5,9 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    modalShow:false
   },
-
+  //发布功能
+  onPublish(){
+    this.setData({
+      modalShow:true
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

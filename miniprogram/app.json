@@ -36,6 +36,5 @@
       "selectedIconPath": "images/profile-actived.png"
     }]
   },
-  "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "sitemapLocation": "sitemap.json"
 }
