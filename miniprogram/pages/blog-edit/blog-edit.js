@@ -98,7 +98,7 @@ Page({
           cloudPath:'blog/'+Date.now()+'-'+Math.random()*1000000+suffix,
           filePath:item,
           success:(res)=>{
-            fileIds=fileIds.concat(res.fileID)
+            fileIds=fileIds.concat([i,res.fileID])
             resolve()
           },
           fail:(res)=>{
@@ -109,11 +109,17 @@ Page({
       promiseArr.push(p)
     }
     Promise.all(promiseArr).then((res)=>{
+      let num=fileIds.length/2
+      let newFileIds=[]
+      for(let j=0;j<num;j++){
+        let x=fileIds.indexOf(j)
+        newFileIds.push(fileIds[x+1])
+      }
       db.collection('blog').add({
         data:{
           ...userInfo,
           content,
-          img:fileIds,
+          img:newFileIds,
           createTime:db.serverDate()
         }
       }).then((res)=>{
