@@ -1,5 +1,8 @@
 const MAX_WORDS_NUM=140
 const MAX_IMG_NUM=9
+const db=wx.cloud.database()
+let content=''
+let userInfo={}
 Page({
 
   /**
@@ -16,7 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
+    userInfo=options
   },
   onInput(event){
     let wordsNum=event.detail.value.length
@@ -26,6 +29,7 @@ Page({
     this.setData({
       wordsNum
     })
+    content=event.detail.value
   },
   onFocus(event){
     this.setData({
@@ -69,6 +73,64 @@ Page({
     wx.previewImage({
       urls: this.data.images,
       current:event.target.dataset.imgsrc
+    })
+  },
+  send(){
+    if(content.trim()===''){
+      wx.showModal({
+        title:"请输入内容",
+        content:""
+      })
+      return
+    }
+    wx.showLoading({
+      title: '发布中',
+      mask:true
+    })
+    //图片上传
+    let promiseArr=[]
+    let fileIds=[]
+    for(let i=0,len=this.data.images.length;i<len;i++){
+      let p=new Promise((resolve,reject)=>{
+        let item=this.data.images[i]
+        let suffix=/\.\w+$/.exec(item)[0]
+        wx.cloud.uploadFile({
+          cloudPath:'blog/'+Date.now()+'-'+Math.random()*1000000+suffix,
+          filePath:item,
+          success:(res)=>{
+            fileIds=fileIds.concat(res.fileID)
+            resolve()
+          },
+          fail:(res)=>{
+            reject()
+          }
+        })
+      })
+      promiseArr.push(p)
+    }
+    Promise.all(promiseArr).then((res)=>{
+      db.collection('blog').add({
+        data:{
+          ...userInfo,
+          content,
+          img:fileIds,
+          createTime:db.serverDate()
+        }
+      }).then((res)=>{
+        wx.hideLoading()
+        wx.showToast({
+          title: '发布成功',
+        })
+        wx.navigateBack()
+        const pages=getCurrentPages()
+        const prevPage=pages[pages.length-2]
+        prevPage.onPullDownRefresh()
+      })
+    }).catch((res)=>{
+      wx.hideLoading()
+      wx.showToast({
+        title: '发布失败',
+      })
     })
   },
   /**

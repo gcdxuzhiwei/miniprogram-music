@@ -30,6 +30,7 @@
 
 .blog-list {
   margin-top: 120rpx;
+  background-color: #f1f1f1;
 }
 
 .blog-panel {

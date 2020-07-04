@@ -7,6 +7,14 @@
       <x-search />
     </view>
   </view>
+  <!-- 博客卡片 -->
+  <view class="blog-list">
+    <block wx:for="{{blogList}}" wx:key="_id">
+      <view class="blog-panel">
+        <x-blog-card blog="{{item}}" data-blogid="{{item._id}}" bindtap="goComment"/>
+      </view>
+    </block>  
+  </view>
   <!-- 底部弹出层 -->
   <x-login modalShow="{{modalShow}}"
     bind:loginsuccess="onLoginSuccess"
