@@ -8,9 +8,8 @@
     </view>
   </view>
   <!-- 底部弹出层 -->
-  <x-bottom-modal modalShow="{{modalShow}}">
-    <view>
-      <view>dasdfasfas</view>
-    </view>
-  </x-bottom-modal>
+  <x-login modalShow="{{modalShow}}"
+    bind:loginsuccess="onLoginSuccess"
+    bind:loginfail="onLoginFail"
+  ></x-login>
 </view>
