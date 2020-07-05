@@ -69,6 +69,7 @@ Page({
       backgroundAudioManager.coverImgUrl=music.al.picUrl
       backgroundAudioManager.singer=music.ar[0].name
       backgroundAudioManager.epname=music.al.name
+      this.savePlayHistory()
       }
       backgroundAudioManager.play()
       this.setData({
@@ -135,6 +136,20 @@ Page({
     this.setData({
       isPlaying: false
     })
+  },
+  savePlayHistory(){
+    const music=musiclist[nowPlayingIndex]
+    const openid=app.globalData.openid
+    const history=wx.getStorageSync(openid)
+    let bHave=false
+    for(let i=0,len=history.length;i<len;i++){
+      if(history[i].id==music.id){
+        history.splice(i,1)
+        break
+      }
+    }
+    history.unshift(music)
+    wx.setStorageSync(openid, history)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
