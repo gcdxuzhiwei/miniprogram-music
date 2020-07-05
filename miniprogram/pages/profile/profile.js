@@ -14,7 +14,6 @@ Page({
     wx.cloud.callFunction({
       name: 'getQrCode'
     }).then((res) => {
-      console.log(res)
       const fileId = res.result
       wx.previewImage({
         urls: [fileId],
