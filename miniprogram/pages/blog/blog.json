@@ -5,6 +5,6 @@
     "x-blog-card":"/components/blog-card/blog-card",
     "x-blog-ctrl":"/components/blog-ctrl/blog-ctrl"
   },
-  "navigationBarTitleText":"发现",
+  "navigationBarTitleText":"社区",
   "enablePullDownRefresh": true
 }
