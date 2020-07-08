@@ -1,4 +1,6 @@
 // pages/musiclist/musiclist.js
+let allMusic=[]
+let show=10
 Page({
 
   /**
@@ -24,6 +26,7 @@ Page({
       }
     }).then((res)=>{
       const pl=res.result.playlist
+      allMusic=pl.trackIds
       this.setData({
         musiclist:pl.tracks,
         listInfo:{
@@ -49,7 +52,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    show=10
   },
 
   /**
@@ -77,7 +80,37 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if(show>=allMusic.length){
+      wx.showToast({
+        title: '没有更多了...',
+      })
+      return
+    }
+    wx.showLoading({
+      title:"加载中"
+    })
+    let nex=(allMusic.length-show)>=50?50:allMusic.length-show
+    let newAr=allMusic.slice(show,show+nex)
+    let str=[]
+    for(let i=0;i<newAr.length;i++){
+      str.push(newAr[i].id)
+    }
+    str=str.join(',')
+    wx.cloud.callFunction({
+      name:'music',
+      data:{
+        musicDetailId:str,
+        $url:'musicDetail'
+      }
+    }).then((res)=>{
+      let songs=res.result.songs
+      this.setData({
+        musiclist:this.data.musiclist.concat(songs)
+      })
+      this._setMusiclist()
+      show+=nex
+      wx.hideLoading()
+    })
   },
 
   /**
