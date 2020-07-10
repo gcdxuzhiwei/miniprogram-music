@@ -6,23 +6,39 @@ Page({
    * 页面的初始数据
    */
   data: {
-    swiperImgUrls: [{
-        url: 'http://p1.music.126.net/oeH9rlBAj3UNkhOmfog8Hw==/109951164169407335.jpg',
-      },
-      {
-        url: 'http://p1.music.126.net/xhWAaHI-SIYP8ZMzL9NOqg==/109951164167032995.jpg',
-      },
-      {
-        url: 'http://p1.music.126.net/Yo-FjrJTQ9clkDkuUCTtUg==/109951164169441928.jpg',
-      }
-    ],
+    swiperImgUrls: [],
     playlist: []
   },
-
+  onSearch(event){
+    let musicName=event.detail.keyword.trim()
+    if(musicName==''){
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/search-detail/search-detail?keyword='+musicName,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.cloud.callFunction({
+      name:'music',
+      data:{
+        $url:'banner'
+      }
+    }).then((res)=>{
+      let arr=res.result.banners
+      let ban=[]
+      for(let i=0;i<arr.length;i++){
+        ban.push({
+          url:arr[i].imageUrl?arr[i].imageUrl:arr[i].pic
+        })
+      }
+      this.setData({
+        swiperImgUrls:ban
+      })
+    })
     this._getPlaylist()
   },
 

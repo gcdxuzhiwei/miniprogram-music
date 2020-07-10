@@ -24,6 +24,18 @@ exports.main = async (event, context) => {
       return JSON.parse(res)
     })
   })
+  app.router('banner',async(ctx,next)=>{
+    ctx.body=await rp(BASE_URL+'/banner?type=2')
+    .then((res)=>{
+      return JSON.parse(res)
+    })
+  })
+  app.router('search',async(ctx,next)=>{
+    ctx.body=await rp(BASE_URL+'/search?keywords='+event.keyword)
+    .then((res)=>{
+      return JSON.parse(res)
+    })
+  })
   app.router('musicDetail',async(ctx,next)=>{
     ctx.body=await rp(BASE_URL+'/song/detail?ids='+event.musicDetailId)
     .then((res)=>{

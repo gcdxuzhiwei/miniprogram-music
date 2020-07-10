@@ -1,4 +1,9 @@
-<swiper indicator-dots="true" autoplay="true" interval="2000" duration="1000">
+<view class="header">
+	<view class="search-container">
+		<x-search bind:search="onSearch"/>
+	</view>
+</view>
+<swiper indicator-dots="true" autoplay="true" interval="2000" duration="1000" class="swiper" circular="true">
 	<block wx:for="{{swiperImgUrls}}" wx:key='url'>
 		<swiper-item>
 			<image src="{{item.url}}" mode="widthFix" class="img"></image>
