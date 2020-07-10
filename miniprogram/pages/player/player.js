@@ -56,11 +56,13 @@ Page({
         musicId:musicId
       }
     }).then((res)=>{
+      let that=this
       let result=JSON.parse(res.result)
       if(result.data[0].url==null){
         wx.showToast({
-          title: '无权限播放',
+          title: '无VIP,2s后跳转',
         })
+        setTimeout(that.onNext,2000)
         return
       }
       if(!this.data.isSame){

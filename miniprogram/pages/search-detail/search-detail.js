@@ -35,7 +35,6 @@ Page({
           $url:'musicDetail'
         }
       }).then((res)=>{
-        console.log(res.result.songs);
         this.setData({
           musiclist:res.result.songs
         })
